@@ -70,6 +70,11 @@ type Player struct {
 	ready      bool
 }
 
+// Command exposed exec.Cmd that is executing player
+func (p *Player) Command() *exec.Cmd {
+	return p.command
+}
+
 // IsRunning checks to see if the OMXPlayer process is running. If it is, the
 // function returns true, otherwise it returns false.
 func (p *Player) IsRunning() bool {
