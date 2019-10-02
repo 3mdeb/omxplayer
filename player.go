@@ -68,6 +68,7 @@ type Player struct {
 	connection *dbus.Conn
 	bus        *dbus.Object
 	ready      bool
+	done       chan struct{}
 }
 
 // IsRunning checks to see if the OMXPlayer process is running. If it is, the
@@ -104,6 +105,12 @@ func (p *Player) WaitForReady() {
 	for !p.IsReady() {
 		time.Sleep(50 * time.Millisecond)
 	}
+}
+
+// Done returns a channel (receiving) that will receive notification when
+// player instance process finishes
+func (p *Player) Done() <-chan struct{} {
+	return p.done
 }
 
 // Quit stops the currently playing video and terminates the omxplayer process.

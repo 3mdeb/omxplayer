@@ -70,7 +70,21 @@ func New(url string, args ...string) (player *Player, err error) {
 		command:    cmd,
 		connection: conn,
 		bus:        conn.Object(ifaceOmx, pathMpris),
+		done:       make(chan struct{}),
 	}
+
+	// Detect player process completion
+	go func(omxPlayerCmd *exec.Cmd, done chan struct{}) {
+		omxPlayerCmd.Wait()
+		select {
+		case done <- struct{}{}:
+			log.Debug("done notification send")
+		default:
+			log.Debug("skipping done notification")
+		}
+
+	}(cmd, player.done)
+
 	return
 }
 
