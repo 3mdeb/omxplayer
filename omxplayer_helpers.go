@@ -25,6 +25,7 @@ func waitForFile(path string) error {
 	log.WithFields(log.Fields{
 		"file": path,
 	}).Debug("omxplayer: waiting for file")
+	fmt.Println("OMX: wait for file ", path)
 	for i := 0; i < 100; i++ {
 		_, err := os.Stat(path)
 		if err == nil || !os.IsNotExist(err) {

@@ -3,6 +3,7 @@
 package omxplayer
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -51,21 +52,25 @@ func SetUser(u, h string) {
 func New(url string, args ...string) (player *Player, err error) {
 	removeDbusFiles()
 
+	fmt.Println("OMX: startr omx player process")
 	cmd, err := execOmxplayer(url, args...)
 	if err != nil {
 		return
 	}
 
+	fmt.Println("OMX: setup dbus")
 	err = setupDbusEnvironment()
 	if err != nil {
 		return
 	}
 
+	fmt.Println("OMX: dbus connection")
 	conn, err := getDbusConnection()
 	if err != nil {
 		return
 	}
 
+	fmt.Println("OMX: dbus connection")
 	player = &Player{
 		command:    cmd,
 		connection: conn,
