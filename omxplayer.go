@@ -5,7 +5,6 @@ package omxplayer
 import (
 	"os"
 	"os/exec"
-	"strings"
 
 	dbus "github.com/guelfey/go.dbus"
 	log "github.com/sirupsen/logrus"
@@ -159,7 +158,6 @@ func execOmxplayer(url string, args ...string) (cmd *exec.Cmd, err error) {
 	args = append(args, url)
 
 	cmd = exec.Command(exeOxmPlayer, args...)
-	cmd.Stdin = strings.NewReader(keyPause)
 	err = cmd.Start()
 	return
 }
