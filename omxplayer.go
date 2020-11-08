@@ -51,7 +51,7 @@ func New(url string, args ...string) (player *Player, err error) {
 	// omxplayer can and should use existing dbus files, removing them cause
 	// omxplayer script to create new ones which causes new dbus-daemon process
 	// to create without properly closing the previous one
-	//removeDbusFiles()
+	// removeDbusFiles()
 
 	cmd, err := execOmxplayer(url, args...)
 	if err != nil {
